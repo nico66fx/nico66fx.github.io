@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nico66fx PRO - Sistema de Bots de Trading</title>
+    <meta name="description"
+        content="Copia el sistema de bots de trading de nico66fx. Bots listos, setups paso a paso, VPS recomendado, copy trading y soporte privado.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui']
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 7s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .card-glass {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: linear-gradient(145deg, rgba(31, 41, 55, 0.72), rgba(17, 24, 39, 0.66));
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+            backdrop-filter: blur(18px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            font-weight: 800;
+            padding: 0.875rem 1.75rem;
+            transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+            box-shadow: 0 18px 45px rgba(59, 130, 246, 0.24);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 22px 55px rgba(59, 130, 246, 0.34);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(17, 24, 39, 0.72);
+            color: rgb(229, 231, 235);
+            font-weight: 700;
+            padding: 0.875rem 1.5rem;
+            transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(96, 165, 250, 0.55);
+            background: rgba(31, 41, 55, 0.92);
+            transform: translateY(-1px);
+        }
+
+        .pulse-delay {
+            animation-delay: 1.5s;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-950 text-white overflow-x-hidden selection:bg-brand-400 selection:text-white">
+    <nav class="fixed w-full z-50 top-0 left-0 border-b border-white/10 bg-gray-950/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-center md:justify-between h-16 relative">
+                <a href="#hero" class="flex items-center gap-3">
+                    <span class="font-bold text-lg tracking-tight">nico66fx <span
+                            class="text-brand-400">PRO</span></span>
+                </a>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#resultados"
+                            class="hover:text-brand-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">Resultados</a>
+                        <a href="#operar"
+                            class="hover:text-brand-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">Cómo
+                            operar</a>
+                        <a href="#incluye"
+                            class="hover:text-brand-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">Qué
+                            incluye</a>
+                        <a href="#pricing"
+                            class="hover:text-brand-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">Precios</a>
+                        <a href="https://t.me/cfcommfree" target="_blank"
+                            class="bg-brand-500/15 text-brand-300 border border-brand-400/30 hover:bg-brand-500 hover:text-white px-4 py-2 rounded-full text-sm font-semibold transition-all">Telegram
+                            Free</a>
+                    </div>
+                </div>
+
+                <div class="absolute right-0 flex md:hidden">
+                    <button type="button" id="mobile-menu-btn"
+                        class="bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">Abrir menú</span>
+                        <i data-lucide="menu" class="block w-6 h-6 menu-open"></i>
+                        <i data-lucide="x" class="hidden w-6 h-6 menu-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden md:hidden bg-gray-900/95 backdrop-blur-xl border-b border-gray-800 absolute w-full"
+            id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#resultados"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium mobile-link">Resultados</a>
+                <a href="#operar"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium mobile-link">Cómo
+                    operar</a>
+                <a href="#incluye"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium mobile-link">Qué
+                    incluye</a>
+                <a href="#pricing"
+                    class="text-brand-400 font-bold block px-3 py-2 rounded-md text-base mobile-link">Acceder y empezar
+                    configuración</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <div
+                    class="absolute top-20 left-1/4 w-96 h-96 bg-brand-500/15 rounded-full blur-[120px] animate-pulse-slow">
+                </div>
+                <div
+                    class="absolute bottom-20 right-1/4 w-96 h-96 bg-sky-400/10 rounded-full blur-[120px] animate-pulse-slow pulse-delay">
+                </div>
+                <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-gray-950 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+                <div
+                    class="mb-6 inline-flex items-center gap-2 rounded-full border border-green-400/30 bg-green-500/10 px-4 py-2 text-sm text-green-300">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                    </span>
+                    Oferta lifetime disponible solo por tiempo limitado
+                </div>
+
+                <div class="relative mb-8 group cursor-pointer animate-float">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-brand-400 to-sky-400 rounded-full blur-lg opacity-60 group-hover:opacity-90 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-gray-900 overflow-hidden bg-gray-800 flex items-center justify-center">
+                        <img src="./assets/profile.jpg" alt="Nico" fetchpriority="high" decoding="async"
+                            class="w-full h-full object-cover"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <span
+                            class="hidden w-full h-full items-center justify-center text-4xl font-black bg-gradient-to-br from-gray-800 to-gray-950 text-brand-300">N66</span>
+                    </div>
+                    <div class="absolute bottom-0 right-0 bg-green-500 w-6 h-6 rounded-full border-4 border-gray-900"
+                        title="Online"></div>
+                </div>
+
+                <h1
+                    class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-400">
+                    Aprende cómo utilizo bots de trading algorítmico <br class="hidden md:block" />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-sky-300">y empieza
+                        en menos de 1 hora</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed">
+                    Un sistema simple para operar con bots sin saber programar: setups listos, VPS recomendado, copy
+                    trading, cuentas auditadas y soporte paso a paso dentro de la comunidad PRO.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-3xl mb-10 text-sm text-gray-300">
+                    <div class="card-glass py-3 px-4">
+                        <strong class="text-white">+150 alumnos</strong><br>
+                        en comunidad
+                    </div>
+                    <div class="card-glass py-3 px-4">
+                        <strong class="text-white">Cuentas auditadas</strong><br>
+                        en Myfxbook
+                    </div>
+                    <div class="card-glass py-3 px-4">
+                        <strong class="text-white">Sin experiencia</strong><br>
+                        instalación guiada
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center gap-5 w-full">
+                    <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                        <a href="#pricing" class="btn-secondary w-full sm:w-auto">
+                            <i data-lucide="calendar" class="w-5 h-5 text-brand-300"></i>
+                            <span>Empezar configuración mensual</span>
+                        </a>
+                        <a href="#pricing" class="btn-primary w-full sm:w-auto">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                            <span>Empezar configuración lifetime</span>
+                        </a>
+                    </div>
+
+                    <a href="https://wa.link/md9s5v" target="_blank"
+                        class="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors text-sm font-medium hover:underline decoration-green-500/30 underline-offset-4">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>¿Tienes dudas? Escríbeme por WhatsApp</span>
+                    </a>
+                </div>
+
+                <div
+                    class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-gray-800 pt-8 w-full max-w-4xl opacity-90">
+                    <div>
+                        <div class="text-3xl font-bold text-white">1h</div>
+                        <div class="text-sm text-gray-500 uppercase tracking-widest mt-1">Setup inicial</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white">5</div>
+                        <div class="text-sm text-gray-500 uppercase tracking-widest mt-1">Formas de operar</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white">24/5</div>
+                        <div class="text-sm text-gray-500 uppercase tracking-widest mt-1">Bots activos</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white">PRO</div>
+                        <div class="text-sm text-gray-500 uppercase tracking-widest mt-1">Soporte privado</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-gray-500">
+                <i data-lucide="chevron-down" class="w-6 h-6"></i>
+            </div>
+        </section>
+
+        <section id="que-compras" class="py-16 md:py-20 relative overflow-hidden">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-[120px] pointer-events-none">
+            </div>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="card-glass text-center">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Antes de acceder</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-5">Qué estás comprando realmente</h2>
+                    <p class="text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                        Estás comprando acceso a una metodología práctica para trabajar con bots: qué instalar, qué bot
+                        usar según tu perfil, cómo cargar la configuración, cómo dejarlo funcionando en VPS y dónde
+                        revisar resultados. La idea es reducir decisiones innecesarias y seguir una guía concreta.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="video" class="py-16 md:py-20 relative overflow-hidden bg-gray-900/50">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-[120px] pointer-events-none">
+            </div>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="card-glass">
+                    <div class="text-center mb-8">
+                        <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Vista interna</span>
+                        <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4">Así se ve por dentro</h2>
+                        <p class="text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                            Aquí puedes ver cómo es la comunidad por dentro, cómo se presentan los setups y cómo se
+                            trabaja con los bots en la práctica.
+                        </p>
+                    </div>
+
+                    <div
+                        class="aspect-video w-full overflow-hidden rounded-xl border border-gray-700/60 bg-gray-900/70">
+                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/RbDe5-OP15I?rel=0"
+                            title="Vista interna de nico66fx PRO" loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <p class="text-center text-sm text-gray-500 max-w-2xl mx-auto mt-5">
+                        Lo que ves en el vídeo corresponde al mismo entorno y setups que se incluyen en PRO.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="operar" class="py-16 md:py-24 relative overflow-hidden">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Oferta simple</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Elige cómo quieres operar</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        En vez de revisar muchas opciones sin contexto, eliges tu perfil y sigues el setup recomendado.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card-glass group hover:bg-gray-800/80 transition-colors">
+                        <div
+                            class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Conservador</h3>
+                        <p class="text-sm text-gray-400 mb-5">Para empezar con calma, priorizando control de riesgo,
+                            reglas claras y estabilidad.</p>
+                        <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4 mb-5">
+                            <div class="text-sm text-gray-500">Setup recomendado</div>
+                            <div class="text-lg font-bold text-white">BOT RAW XAU Y BREAKOUT</div>
+                            <p class="text-xs text-gray-400 mt-1">Bot automático de breakout para XAUUSD, pensado para
+                                entradas limpias y control de riesgo.</p>
+                        </div>
+                        <a href="#pricing"
+                            class="block text-center w-full py-2 bg-gray-700 hover:bg-brand-500 rounded-lg text-sm font-semibold transition-colors">Entrar
+                            y copiar el setup</a>
+                    </div>
+
+                    <div class="card-glass group hover:bg-gray-800/80 transition-colors border-brand-400/30">
+                        <div
+                            class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center text-yellow-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <div
+                            class="mb-2 inline-flex rounded-full bg-brand-500/15 px-3 py-1 text-xs font-bold text-brand-300">
+                            Recomendado
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Riesgo medio</h3>
+                        <p class="text-sm text-gray-400 mb-5">Para buscar más movimiento con gestión definida y una
+                            operativa más activa.</p>
+                        <div class="rounded-lg bg-gray-900/60 border border-brand-400/30 p-4 mb-5">
+                            <div class="text-sm text-gray-500">Setup recomendado</div>
+                            <div class="text-lg font-bold text-white">BOT EURUSD SCALP</div>
+                            <p class="text-xs text-gray-400 mt-1">Bot automático para operativa más activa en Forex y
+                                cuentas de fondeo, con parámetros ya configurados.</p>
+                        </div>
+                        <a href="#pricing"
+                            class="block text-center w-full py-2 bg-brand-500 hover:bg-brand-400 rounded-lg text-sm font-semibold transition-colors">Entrar
+                            y copiar el setup</a>
+                    </div>
+
+                    <div class="card-glass group hover:bg-gray-800/80 transition-colors">
+                        <div
+                            class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center text-sky-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="copy" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Cuentas de fondeo</h3>
+                        <p class="text-sm text-gray-400 mb-5">Para copiar operativa sin tocar configuraciones
+                            avanzadas ni estar todo el día mirando gráficos.</p>
+                        <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4 mb-5">
+                            <div class="text-sm text-gray-500">Opción recomendada</div>
+                            <div class="text-lg font-bold text-white">BOT GPT para Axi Select</div>
+                        </div>
+                        <a href="#pricing"
+                            class="block text-center w-full py-2 bg-gray-700 hover:bg-brand-500 rounded-lg text-sm font-semibold transition-colors">Entrar
+                            y copiar el setup</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultados" class="py-16 md:py-24 relative overflow-hidden bg-gray-900/50">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Resultados reales</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Cuentas auditadas con histórico público</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Revisa las cuentas en Myfxbook y valida el rendimiento histórico, drawdown e historial antes de acceder.
+                        Estos resultados corresponden a los mismos setups incluidos en PRO.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="card-glass">
+                        <div class="flex items-center justify-between mb-5">
+                            <div>
+                                <h3 class="text-xl font-bold">RAW XAU</h3>
+                                <p class="text-xs text-gray-500 mt-1">Breakout automático en XAUUSD</p>
+                            </div>
+                            <span
+                                class="px-3 py-1 rounded-full bg-green-500/15 text-green-300 text-xs font-semibold">Auditada</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <div class="text-3xl font-bold text-white">+648.73%</div>
+                                <div class="text-sm text-gray-500">Rendimiento histórico</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-white">18.55%</div>
+                                <div class="text-sm text-gray-500">Drawdown</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-5">
+                            Resultado real con histórico público. Los datos exactos se consultan en la auditoría.
+                        </p>
+                        <a href="https://www.myfxbook.com/members/gatewaymt4/bot-xau-breakout-nico66fx/11839465"
+                            target="_blank"
+                            class="flex items-center justify-center gap-2 w-full py-2 bg-gray-700 hover:bg-brand-500 rounded-lg text-sm font-semibold transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            Ver en Myfxbook
+                        </a>
+                        <p class="mt-4 text-[11px] text-gray-500 text-center leading-tight">Los resultados históricos no garantizan resultados futuros. El trading implica riesgo elevado de pérdida.</p>
+                    </div>
+
+                    <div class="card-glass border-brand-400/30">
+                        <div class="flex items-center justify-between mb-5">
+                            <div>
+                                <h3 class="text-xl font-bold">BOT GPT (Axi Select)</h3>
+                                <p class="text-xs text-gray-500 mt-1">Operativa automática en Forex</p>
+                            </div>
+                            <span
+                                class="px-3 py-1 rounded-full bg-green-500/15 text-green-300 text-xs font-semibold">Auditada</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <div class="text-3xl font-bold text-white">+14.96%</div>
+                                <div class="text-sm text-gray-500">Rendimiento histórico</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-white">4.55%</div>
+                                <div class="text-sm text-gray-500">Drawdown</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-5">
+                            Cuenta pública para comprobar evolución, riesgo y consistencia sin depender de capturas.
+                        </p>
+                        <a href="https://www.myfxbook.com/members/gatewaymt4/axi-select-50k-nico66fx/11943699"
+                            target="_blank"
+                            class="flex items-center justify-center gap-2 w-full py-2 bg-brand-500 hover:bg-brand-400 rounded-lg text-sm font-semibold transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            Ver en Myfxbook
+                        </a>
+                        <p class="mt-4 text-[11px] text-gray-500 text-center leading-tight">Los resultados históricos no garantizan resultados futuros. El trading implica riesgo elevado de pérdida.</p>
+                    </div>
+
+                    <div class="card-glass">
+                        <div class="flex items-center justify-between mb-5">
+                            <h3 class="text-xl font-bold">Portfolio PRO</h3>
+                            <span
+                                class="px-3 py-1 rounded-full bg-sky-500/15 text-sky-300 text-xs font-semibold">Seguimiento</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <div class="text-3xl font-bold text-white">3+</div>
+                                <div class="text-sm text-gray-500">Setups activos</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-white">24/5</div>
+                                <div class="text-sm text-gray-500">Operativa</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-5">
+                            Acceso al sistema completo: bots, copy trading y configuraciones actualizadas.
+                        </p>
+                        <a href="https://www.myfxbook.com/members/gatewaymt4/portfolio-pro-nico66fx/12030019"
+                            target="_blank"
+                            class="flex items-center justify-center gap-2 w-full py-2 bg-gray-700 hover:bg-brand-500 rounded-lg text-sm font-semibold transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            Ver historial completo
+                        </a>
+                        <p class="mt-4 text-[11px] text-gray-500 text-center leading-tight">Los resultados históricos no garantizan resultados futuros. El trading implica riesgo elevado de pérdida.</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <p class="text-sm text-gray-500 max-w-3xl mx-auto mb-6">
+                        Los resultados pasados no garantizan resultados futuros. PRO incluye los setups asociados a
+                        estas cuentas para que puedas revisar el contexto antes de configurar nada.
+                    </p>
+                    <a href="#pricing" class="btn-primary">
+                        <i data-lucide="lock" class="w-5 h-5"></i>
+                        <span>Acceder y empezar configuración</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="incluye" class="py-16 md:py-24 relative overflow-hidden">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Qué recibes</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Qué incluye exactamente PRO</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Acceso a bots automáticos, configuraciones preparadas, guía de instalación, comunidad privada y
+                        soporte para revisar dudas de configuración.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="card-glass">
+                        <i data-lucide="bot" class="w-8 h-8 text-brand-300 mb-4"></i>
+                        <h3 class="font-bold mb-2">Bots listos para usar</h3>
+                        <p class="text-sm text-gray-400">5+ bots automáticos con setups para XAUUSD, EURUSD y Forex.</p>
+                    </div>
+                    <div class="card-glass">
+                        <i data-lucide="list-checks" class="w-8 h-8 text-brand-300 mb-4"></i>
+                        <h3 class="font-bold mb-2">Setup paso a paso</h3>
+                        <p class="text-sm text-gray-400">Instalación de plataforma, carga del bot y configuración base.
+                        </p>
+                    </div>
+                    <div class="card-glass">
+                        <i data-lucide="users" class="w-8 h-8 text-brand-300 mb-4"></i>
+                        <h3 class="font-bold mb-2">Comunidad privada</h3>
+                        <p class="text-sm text-gray-400">Canal privado para dudas técnicas y actualizaciones de setups.
+                        </p>
+                    </div>
+                    <div class="card-glass">
+                        <i data-lucide="server" class="w-8 h-8 text-brand-300 mb-4"></i>
+                        <h3 class="font-bold mb-2">VPS recomendado</h3>
+                        <p class="text-sm text-gray-400">Recomendación para ejecutar los bots sin depender del
+                            ordenador.</p>
+                    </div>
+                    <div class="card-glass">
+                        <i data-lucide="copy-check" class="w-8 h-8 text-brand-300 mb-4"></i>
+                        <h3 class="font-bold mb-2">Copy trading</h3>
+                        <p class="text-sm text-gray-400">Opción para seguir una configuración operativa ya definida.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-12 card-glass max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-bold mb-2">La idea es simple: configurar con criterio.</h3>
+                        <p class="text-gray-400">No tienes que elegir a ciegas: dentro se indica qué bot usar según tu
+                            perfil.</p>
+                    </div>
+                    <a href="#pricing" class="btn-primary shrink-0">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <span>Acceder y empezar configuración</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="social" class="py-16 md:py-24 relative overflow-hidden bg-gray-900/50">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+                <div class="text-center mb-16">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4">
+                        <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                        Prueba real
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-6">Así se ve la comunidad por dentro</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                        Mensajes reales mientras la gente configura y usa los bots dentro de PRO. Sin filtros,
+                        transparencia total.
+                    </p>
+                </div>
+
+                <!-- Carrusel horizontal -->
+                <div class="relative max-w-6xl mx-auto">
+                    <!-- Fade edges -->
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-gray-950 to-transparent z-10 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute right-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-gray-950 to-transparent z-10 pointer-events-none">
+                    </div>
+
+                    <div
+                        class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 pt-4 px-4 md:px-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+
+                        <!-- Imagen 1 -->
+                        <div
+                            class="snap-center shrink-0 w-[280px] md:w-[350px] relative group cursor-grab active:cursor-grabbing">
+                            <div
+                                class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-sky-400 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
+                            </div>
+                            <img src="./assets/tg1.PNG"
+                                class="relative w-full rounded-2xl border border-white/10 shadow-2xl group-hover:-translate-y-2 transition duration-500 bg-gray-900 object-cover"
+                                alt="Comunidad Telegram 1">
+                        </div>
+
+                        <!-- Imagen 2 -->
+                        <div
+                            class="snap-center shrink-0 w-[280px] md:w-[350px] relative group cursor-grab active:cursor-grabbing">
+                            <div
+                                class="absolute -inset-1 bg-gradient-to-r from-sky-400 to-brand-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
+                            </div>
+                            <img src="./assets/tg2.PNG"
+                                class="relative w-full rounded-2xl border border-white/10 shadow-2xl group-hover:-translate-y-2 transition duration-500 bg-gray-900 object-cover"
+                                alt="Comunidad Telegram 2">
+                        </div>
+
+                        <!-- Imagen 3 -->
+                        <div
+                            class="snap-center shrink-0 w-[280px] md:w-[350px] relative group cursor-grab active:cursor-grabbing">
+                            <div
+                                class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-sky-400 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
+                            </div>
+                            <img src="./assets/tg3.PNG"
+                                class="relative w-full rounded-2xl border border-white/10 shadow-2xl group-hover:-translate-y-2 transition duration-500 bg-gray-900 object-cover"
+                                alt="Comunidad Telegram 3">
+                        </div>
+
+            
+                </div>
+
+                <div class="mt-8 flex justify-center">
+                    <div
+                        class="flex items-center gap-2 text-sm text-gray-500 bg-gray-900/50 px-4 py-2 rounded-full border border-gray-800">
+                        <i data-lucide="info" class="w-4 h-4 text-brand-400"></i>
+                        <p>Testimonios y capturas reales de los usuarios de nico66fx PRO</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="detalle-incluye" class="py-16 md:py-24 relative overflow-hidden">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Contenido PRO</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Qué incluye exactamente</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Incluye bots automáticos, mercados definidos y configuraciones ya preparadas. No son señales:
+                        los bots pueden ejecutar operaciones según sus reglas.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="card-glass">
+                        <div
+                            class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center text-yellow-400 mb-4">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">5+ bots automáticos</h3>
+                        <p class="text-sm text-gray-400 mb-5">
+                            Incluye bots de breakout para rupturas de precio, scalping para entradas cortas, operativa
+                            automática en Forex y configuración de copy trading. No tienes que ejecutar señales a mano.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-700/60 rounded text-xs text-gray-300">RAW XAU</span>
+                            <span class="px-2 py-1 bg-gray-700/60 rounded text-xs text-gray-300">BOT GPT</span>
+                            <span class="px-2 py-1 bg-gray-700/60 rounded text-xs text-gray-300">BREAKOUT EA</span>
+                            <span class="px-2 py-1 bg-gray-700/60 rounded text-xs text-gray-300">Scalp EURUSD</span>
+                            <span class="px-2 py-1 bg-gray-700/60 rounded text-xs text-gray-300">Bot GRID</span>
+                        </div>
+                    </div>
+
+                    <div class="card-glass border-brand-400/30">
+                        <div
+                            class="w-12 h-12 bg-brand-500/20 rounded-lg flex items-center justify-center text-brand-300 mb-4">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Mercados claros</h3>
+                        <p class="text-sm text-gray-400 mb-5">
+                            Los setups están pensados para XAUUSD, EURUSD y pares Forex seleccionados. Cada bot tiene
+                            un mercado de uso, una configuración base y una explicación de cuándo tiene sentido usarlo.
+                        </p>
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs text-gray-300">
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 px-2 py-3">XAUUSD</div>
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 px-2 py-3">EURUSD</div>
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 px-2 py-3">AUDCAD</div>
+                        </div>
+                    </div>
+
+                    <div class="card-glass">
+                        <div
+                            class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 mb-4">
+                            <i data-lucide="settings-2" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Setups ya configurados</h3>
+                        <p class="text-sm text-gray-400 mb-5">
+                            Los parámetros base ya vienen definidos. Recibes la guía para instalar, cargar el setup
+                            recomendado, conectarlo al VPS y dejar el bot trabajando según tu perfil de riesgo.
+                        </p>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                <span>Configuraciones listas para copiar</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                <span>Explicación simple de qué hace cada bot</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                <span>Actualizaciones cuando se ajusta el sistema</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-center text-gray-400 max-w-2xl mx-auto mt-10">
+                    No tienes que elegir a ciegas: dentro se indica qué bot usar según tu perfil.
+                </p>
+            </div>
+        </section>
+
+        <section id="informacion-adicional" class="py-16 md:py-24 relative overflow-hidden bg-gray-900/50">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- Columna 1: Proceso -->
+                    <div class="card-glass h-full flex flex-col">
+                        <div class="text-center mb-8">
+                            <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Proceso</span>
+                            <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-3">Qué pasa después de acceder</h2>
+                            <p class="text-gray-400 text-sm">
+                                De la compra a la ejecución sin tener que interpretar todo por tu cuenta.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4">
+                                <div class="text-brand-300 font-bold mb-2">1. Acceso</div>
+                                <p class="text-sm text-gray-400">Recibes el contenido PRO, bots, setups y guías de
+                                    instalación.</p>
+                            </div>
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4">
+                                <div class="text-brand-300 font-bold mb-2">2. Instalación</div>
+                                <p class="text-sm text-gray-400">Sigues la guía para preparar plataforma, broker y VPS
+                                    si lo usas.</p>
+                            </div>
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4">
+                                <div class="text-brand-300 font-bold mb-2">3. Setup</div>
+                                <p class="text-sm text-gray-400">Eliges el perfil y copias la configuración indicada.
+                                </p>
+                            </div>
+                            <div class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4">
+                                <div class="text-brand-300 font-bold mb-2">4. Ejecución</div>
+                                <p class="text-sm text-gray-400">Dejas el bot funcionando y revisas el comportamiento
+                                    con soporte.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna 2: Perfil -->
+                    <div class="card-glass h-full flex flex-col">
+                        <div class="text-center mb-8">
+                            <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Perfil</span>
+                            <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-3">Esto encaja contigo si...</h2>
+                            <p class="text-gray-400 text-sm">
+                                Características de los traders que aprovechan mejor este ecosistema.
+                            </p>
+                        </div>
+
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300 flex-grow">
+                            <li
+                                class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4 flex items-center justify-center text-center">
+                                Quieres automatizar sin programar.
+                            </li>
+                            <li
+                                class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4 flex items-center justify-center text-center">
+                                No quieres estar delante del gráfico todo el día.
+                            </li>
+                            <li
+                                class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4 flex items-center justify-center text-center">
+                                Buscas un sistema ya estructurado y probado.
+                            </li>
+                            <li
+                                class="rounded-lg bg-gray-900/60 border border-gray-700/60 p-4 flex items-center justify-center text-center">
+                                Prefieres seguir un proceso claro en vez de improvisar.
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-16 md:py-24 relative overflow-hidden bg-gray-900/50">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm">Acceso PRO</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4">Elige tu acceso a <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-sky-300">nico66fx
+                            PRO</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Puedes elegir acceso mensual o pago único. El lifetime equivale a 5 meses de mensualidad y
+                        mantiene el acceso a futuras actualizaciones publicadas en PRO.
+                    </p>
+                </div>
+
+                <div class="card-glass max-w-4xl mx-auto mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300 text-center">
+                        <div>Puedes empezar con capital pequeño para probar el proceso.</div>
+                        <div>No necesitas experiencia previa ni saber programar.</div>
+                        <div>El soporte te ayuda con la instalación y configuración.</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                    <div class="card-glass">
+                        <div class="text-center pb-8 border-b border-gray-700/50">
+                            <h3 class="text-2xl font-bold text-gray-100">PRO Mensual</h3>
+                            <div class="mt-4 flex items-baseline justify-center gap-2">
+                                <span class="text-5xl font-bold text-white">49€</span>
+                                <span class="text-lg text-gray-500">/mes</span>
+                            </div>
+                            <p class="text-sm text-gray-400 mt-2 font-medium">Para probar el sistema paso a paso</p>
+                        </div>
+
+                        <div class="py-8 px-4">
+                            <ul class="space-y-4 text-left">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Acceso a bots y setups PRO</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Guía de instalación paso a paso</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Comunidad privada y soporte</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Copy trading y VPS recomendado</span>
+                                </li>
+                            </ul>
+
+                            <div class="mt-8 space-y-3">
+                                <a href="https://buy.stripe.com/dRmeVfgeRfy7fotb5D3AY0W" target="_blank"
+                                    class="btn-secondary w-full">
+                                    <span>Empezar configuración mensual</span>
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </a>
+                                <p class="text-[11px] text-gray-500 text-center leading-tight mt-3">Contenido educativo y tecnológico. No se garantizan beneficios ni resultados específicos. Debido a la naturaleza digital del producto, no se realizan devoluciones.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card-glass relative transform hover:scale-105 transition-transform duration-300 border-brand-400/30 shadow-2xl shadow-brand-500/10">
+                        <div
+                            class="absolute top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-500 to-brand-600 text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-lg">
+                            PAGO ÚNICO
+                        </div>
+
+                        <div class="text-center pt-8 pb-8 border-b border-gray-700/50">
+                            <h3 class="text-2xl font-bold text-gray-100">PRO Lifetime</h3>
+                            <div class="mt-4 flex items-baseline justify-center gap-2">
+                                <span class="text-5xl font-bold text-white">249€</span>
+                                <span class="text-lg text-gray-500 line-through">499€</span>
+                            </div>
+                            <p class="text-sm text-brand-300 mt-2 font-medium">Pago único · Equivale a 5 meses</p>
+                            <p class="text-xs text-brand-200/70 mt-1">Sin renovación mensual</p>
+                            <div
+                                class="mt-4 text-red-500 font-bold animate-pulse text-lg drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]">
+                                Acceso lifetime disponible
+                            </div>
+                        </div>
+
+                        <div class="py-8 px-4">
+                            <ul class="space-y-4 text-left">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Todo lo incluido en PRO mensual</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Acceso lifetime a la comunidad PRO</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Nuevos setups y actualizaciones incluidas</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-300">Sin pagos mensuales mientras el acceso lifetime esté
+                                        activo</span>
+                                </li>
+                            </ul>
+
+                            <div class="mt-8 space-y-3">
+                                <a href="https://buy.stripe.com/7sY14pd2F85F1xD3Db3AY0X" target="_blank"
+                                    class="btn-primary w-full text-lg">
+                                    <span>Acceder y empezar configuración lifetime</span>
+                                    <i data-lucide="lock" class="w-5 h-5"></i>
+                                </a>
+                                <p class="text-[11px] text-gray-500 text-center leading-tight mt-3">Contenido educativo y tecnológico. No se garantizan beneficios ni resultados específicos. Debido a la naturaleza digital del producto, no se realizan devoluciones.</p>
+                                <a href="https://wa.link/md9s5v" target="_blank"
+                                    class="w-full flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-white transition-colors py-2 rounded-lg hover:bg-gray-800">
+                                    <i data-lucide="message-circle" class="w-4 h-4 text-green-500"></i>
+                                    <span>Resolver dudas antes de acceder</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <p class="text-sm text-gray-500">
+                        Puedes revisar las opciones y escribir por WhatsApp si necesitas confirmar qué setup encaja con
+                        tu perfil antes de acceder.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-16 md:py-24 relative overflow-hidden">
+            <!-- Background effects -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-500/10 rounded-full blur-[150px] pointer-events-none">
+            </div>
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">Preguntas frecuentes</h2>
+
+                <div class="space-y-4">
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Voy a perder dinero?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            Sí, puedes perder dinero. Los bots operan mercado real y el riesgo existe siempre. Por eso
+                            se trabaja con setups definidos, drawdown visible y capital que puedas permitirte arriesgar.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Necesito experiencia?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            No. La guía cubre instalación, carga del bot, configuración base y elección de perfil. No
+                            necesitas programar.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Cuánto capital necesito?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            Puedes empezar con capital pequeño para entender el proceso. La cantidad exacta depende del
+                            broker, el bot y el riesgo que elijas asumir.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Tengo que dejar el ordenador encendido?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            No. Puedes probar desde tu ordenador. Para operar de forma continua, un VPS es más estable.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Qué pasa si me bloqueo instalando algo?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            Puedes preguntar en la comunidad privada. El soporte se centra en instalación, VPS, carga de
+                            setups y dudas de configuración.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Los bots operan automáticamente o son señales?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            Son bots automáticos. No tienes que copiar señales manuales. El bot ejecuta operaciones
+                            cuando se cumplen sus reglas.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿En qué mercados funcionan?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            Principalmente XAUUSD, EURUSD y pares Forex seleccionados. Cada setup indica mercado,
+                            configuración y perfil de uso.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿Necesito VPS obligatoriamente?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            No para probar. Sí es recomendable para uso continuado, porque evita depender de tu
+                            ordenador
+                            o conexión local.
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-0 overflow-hidden">
+                        <button
+                            class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center bg-gray-800/50 hover:bg-gray-800 transition-colors focus:outline-none cursor-pointer">
+                            <span class="font-semibold">¿El código es abierto o cerrado?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                        </button>
+                        <div class="faq-content px-6 py-4 bg-gray-900/30 text-gray-400 border-t border-gray-800 hidden">
+                            Es cerrado. Recibes el bot listo para usar, los parámetros de configuración y la guía de
+                            instalación, no el código fuente.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-4 bg-gray-900/50 rounded-lg border border-gray-800 text-sm text-gray-400 text-center">
+                    <p><strong>Aviso importante:</strong> La información contenida en esta web y en la comunidad es puramente educativa y tecnológica. No constituye asesoramiento financiero. Los resultados pasados no garantizan resultados futuros y el trading algorítmico conlleva un riesgo elevado de pérdida de capital.</p>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#pricing" class="btn-primary">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <span>Acceder y empezar configuración</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex items-center gap-2 mb-4 md:mb-0">
+                    <span class="font-bold text-lg">nico66fx <span class="text-brand-400">PRO</span></span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter"><i
+                            data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><i
+                            data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="https://wa.link/md9s5v" target="_blank"
+                        class="text-gray-400 hover:text-white transition-colors" aria-label="WhatsApp"><i
+                            data-lucide="message-circle" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2026 nico66fx PRO. Todos los derechos reservados.</p>
+                <div class="flex flex-wrap justify-center gap-4 mt-4 md:mt-0">
+                    <a href="terminos.html" class="hover:text-gray-300 transition-colors">Términos y Condiciones</a>
+                    <a href="privacidad.html" class="hover:text-gray-300 transition-colors">Política de Privacidad</a>
+                    <a href="cookies.html" class="hover:text-gray-300 transition-colors">Política de Cookies</a>
+                    <a href="disclaimer.html" class="hover:text-gray-300 transition-colors">Descargo de Responsabilidad</a>
+                    <a href="aviso-legal.html" class="hover:text-gray-300 transition-colors">Aviso Legal</a>
+                </div>
+            </div>
+
+            <div class="mt-8 text-xs text-gray-600 text-center max-w-4xl mx-auto space-y-2">
+                <p>Contenido educativo y tecnológico. No constituye asesoramiento financiero. El trading implica riesgo elevado de pérdida de capital.</p>
+                <p>Esta plataforma es exclusiva para mayores de 18 años. Los resultados pasados no garantizan resultados futuros. El usuario opera bajo su propia responsabilidad.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpen = mobileMenuButton?.querySelector('.menu-open');
+        const menuClose = mobileMenuButton?.querySelector('.menu-close');
+
+        mobileMenuButton?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuOpen.classList.toggle('hidden');
+            menuClose.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach((link) => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuOpen.classList.remove('hidden');
+                menuClose.classList.add('hidden');
+            });
+        });
+
+        document.querySelectorAll('.faq-toggle').forEach((button) => {
+            button.addEventListener('click', () => {
+                button.nextElementSibling.classList.toggle('hidden');
+            });
+        });
+
+        lucide.createIcons();
+    </script>
+
+    <!-- Cookie Banner RGPD -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full z-50 transform translate-y-full transition-transform duration-500 ease-in-out p-4 md:p-6" style="display: none;">
+        <div class="max-w-5xl mx-auto card-glass border-brand-400/30 shadow-2xl relative overflow-hidden">
+            <div class="absolute inset-0 bg-brand-500/5 blur-xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="cookie" class="w-5 h-5 text-brand-400"></i>
+                        Tu Privacidad es Importante
+                    </h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Utilizamos cookies técnicas necesarias para el funcionamiento del sitio web y cookies analíticas/marketing para mejorar tu experiencia. Puedes elegir aceptar todas, rechazar las no esenciales o configurar tus preferencias. Lee nuestra <a href="cookies.html" class="text-brand-400 hover:text-brand-300 underline">Política de Cookies</a>.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 min-w-max">
+                    <button id="btn-config-cookies" class="px-5 py-2.5 rounded-full border border-gray-600 hover:border-gray-400 bg-gray-800/50 hover:bg-gray-700/50 text-sm font-semibold transition-all">Configurar</button>
+                    <button id="btn-reject-cookies" class="px-5 py-2.5 rounded-full border border-gray-600 hover:border-brand-400/50 hover:bg-brand-500/10 text-sm font-semibold transition-all">Rechazar no esenciales</button>
+                    <button id="btn-accept-cookies" class="px-5 py-2.5 rounded-full bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/20 text-sm font-semibold transition-all">Aceptar Todas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('btn-accept-cookies');
+            const rejectBtn = document.getElementById('btn-reject-cookies');
+            const configBtn = document.getElementById('btn-config-cookies');
+
+            if (!localStorage.getItem('cookie_consent')) {
+                cookieBanner.style.display = 'block';
+                setTimeout(() => {
+                    cookieBanner.classList.remove('translate-y-full');
+                }, 100);
+            }
+
+            function hideBanner(consentLevel) {
+                localStorage.setItem('cookie_consent', consentLevel);
+                cookieBanner.classList.add('translate-y-full');
+                setTimeout(() => {
+                    cookieBanner.style.display = 'none';
+                }, 500);
+            }
+
+            acceptBtn?.addEventListener('click', () => hideBanner('all'));
+            rejectBtn?.addEventListener('click', () => hideBanner('essential'));
+            configBtn?.addEventListener('click', () => {
+                alert('Módulo de configuración de cookies en desarrollo. Por defecto solo se cargan las esenciales.');
+                hideBanner('configured');
+            });
+            
+            if(window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+
+</html>
