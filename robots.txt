@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nico66fx.github.io/sitemap.xml
